@@ -10,22 +10,28 @@ import Paper from "@mui/material/Paper";
 import { database } from "../../firebase";
 import { onSnapshot, collection, where, query } from "firebase/firestore";
 
-const HospitalDataShow = ({ option1 }) => {
-  console.log(option1);
+const HospitalDataShow = ({ option1, option2, option3, option4 }) => {
   const [HospitalData, SetHospitalData] = useState([]);
 
   function getData() {
-    const q = query(
-      collection(database, "Hospitals"),
-      where("Locality", "==", option1)
-    );
-    console.log(q.docs)
+    let q;
+    if (option1) {
+      q = query(
+        collection(database, "Hospitals"),
+        where("Locality", "==", option1)
+      );
+    } else {
+      q = collection(database, "Hospitals");
+    }
+    console.log(q.docs);
     onSnapshot(q, (snapshot) =>
       SetHospitalData(snapshot.docs.map((doc) => doc.data()))
     );
   }
 
-  useEffect(() => {getData()}, [option1]);
+  useEffect(() => {
+    getData();
+  }, [option1, option2]);
 
   return (
     <>
