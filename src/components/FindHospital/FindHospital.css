@@ -1,0 +1,15 @@
+h3{
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.searchOptions{
+    padding: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.searchOptions > div{
+    width: 20%; 
+}
