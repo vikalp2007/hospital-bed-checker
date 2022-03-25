@@ -1,31 +1,58 @@
 import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, {tableCellClasses} from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { styled } from '@mui/material/styles';
 
 import { database } from "../../firebase";
-import { onSnapshot, collection, where, query } from "firebase/firestore";
+import {
+  onSnapshot,
+  collection,
+  where,
+  query,
+} from "firebase/firestore";
+import { Link } from "react-router-dom";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 const HospitalDataShow = ({ option1, option2, option3, option4 }) => {
   const [HospitalData, SetHospitalData] = useState([]);
 
   function getData() {
     let q;
-    if (option1) {
+    if (option1 == "All" || option1 === null) {
+      q = collection(database, "Hospitals");
+    } else {
       q = query(
         collection(database, "Hospitals"),
         where("Locality", "==", option1)
       );
-    } else {
-      q = collection(database, "Hospitals");
     }
-    console.log(q.docs);
+
     onSnapshot(q, (snapshot) =>
-      SetHospitalData(snapshot.docs.map((doc) => doc.data()))
+      SetHospitalData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
     );
   }
 
@@ -36,42 +63,43 @@ const HospitalDataShow = ({ option1, option2, option3, option4 }) => {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <Table sx={{ minWidth: 650 }} size="large" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell align="right"> Name</TableCell>
-              <TableCell align="right">Phone Number</TableCell>
-              <TableCell align="right">Locality</TableCell>
-              <TableCell align="right">Vacant Normal Beds</TableCell>
-              <TableCell align="right">Vacant ICU Beds</TableCell>
-              <TableCell align="right">Vacant COVID Beds</TableCell>
-              <TableCell align="right">Vacant Ventilators</TableCell>
+              <StyledTableCell align="left"> Name</StyledTableCell>
+              <StyledTableCell align="right">Phone Number</StyledTableCell>
+              <StyledTableCell align="right">Locality</StyledTableCell>
+              <StyledTableCell align="right">Vacant Normal Beds</StyledTableCell>
+              <StyledTableCell align="right">Vacant ICU Beds</StyledTableCell>
+              <StyledTableCell align="right">Vacant COVID Beds</StyledTableCell>
+              <StyledTableCell align="right">Vacant Ventilators</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {HospitalData.map((data) => (
-              <TableRow
-                key={data.Name}
+            {console.log(HospitalData)}
+            {HospitalData.map((data) => (            
+                <StyledTableRow
+                key={data.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {data.Name}
-                </TableCell>
-                <TableCell align="right">{data["Phone Number"]}</TableCell>
-                <TableCell align="right">{data.Locality}</TableCell>
-                <TableCell align="right">
+                <StyledTableCell component="th" scope="row">
+                <Link to={`hospital/${data.id}`} >{data.Name} </Link>
+                </StyledTableCell>
+                <StyledTableCell align="right">{data["Phone Number"]}</StyledTableCell>
+                <StyledTableCell align="right">{data.Locality}</StyledTableCell>
+                <StyledTableCell align="right">
                   {data["Available Beds"]["Normal Beds"]}
-                </TableCell>
-                <TableCell align="right">
+                </StyledTableCell>
+                <StyledTableCell align="right">
                   {data["Available Beds"]["ICU Beds"]}
-                </TableCell>
-                <TableCell align="right">
+                </StyledTableCell>
+                <StyledTableCell align="right">
                   {data["Available Beds"]["COVID Beds"]}
-                </TableCell>
-                <TableCell align="right">
+                </StyledTableCell>
+                <StyledTableCell align="right">
                   {data["Available Beds"]["Ventilators"]}
-                </TableCell>
-              </TableRow>
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>

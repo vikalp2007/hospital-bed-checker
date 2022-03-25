@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import CircleChart from "./components/CircleChart/CircleChart";
 import Navbar from "./components/Navbar/Navbar";
 import WebFont from "webfontloader";
-import FindHospital from "./components/FindHospital/FindHospital.js"
 import Footer from "./components/Footer/Footer";
+import Home from "./Pages/Home/Home";
+import Newsletter from "./components/Newsletter/Newsletter";
+import HospitalInformation from "./Pages/HospitalInformation/HospitalInformation";
 
 function App() {
-
   useEffect(() => {
     WebFont.load({
       google: {
@@ -18,18 +19,17 @@ function App() {
 
 
   return (
-    <div>
+    <Router>
       <Navbar />
       <div className="container">
-        <h2>FIND A BED</h2>
-        <div style={{ textAlign: "center", padding: "30px" }}>
-        <CircleChart />
-        </div>
-        <FindHospital />
-        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/hospital/:id" element={<HospitalInformation />} />
+        </Routes>
       </div>
+      <Newsletter/>
       <Footer />
-    </div>
+    </Router>
   );
 }
 

@@ -5,18 +5,21 @@ import HospitalDataShow from "../HospitalDataShow/HospitalDataShow";
 
 const FindHospital = () => {
   const locality = [
+    { value: "All", label: "All" },
     { value: "Adarsh Nagar", label: "Adarsh Nagar" },
     { value: "Vidhyadhar Nagar", label: "Vidhyadhar Nagar" },
     { value: "Jagatpura", label: "JagatPura" },
     { value: "SitaPura", label: "SitaPura" },
     { value: "Pratap Nagar", label: "Pratap Nagar" },
     { value: "Badi Chaupad", label: "Badi Chaupad" },
+    { value: "Ajmeri gate", label: "Ajmeri Gate" },
   ];
   const beds_number = [
     { value: "0", label: "greater than 0" },
     { value: "50", label: "greater than 50" },
     { value: "100", label: "greater than 100" },
   ];
+
   const [selectedOption1, setSelectedOption1] = useState(null);
   const [selectedOption2, setSelectedOption2] = useState(null);
   const [selectedOption3, setSelectedOption3] = useState(null);
@@ -32,7 +35,7 @@ const FindHospital = () => {
           onChange={(entry) => setSelectedOption1(entry.value)}
         />
         <Select
-          options={beds_number}
+          options={beds_number}d
           placeholder="ICU Beds"
           defaultValue={selectedOption2}
           onChange={(entry) => setSelectedOption2(entry.value)}

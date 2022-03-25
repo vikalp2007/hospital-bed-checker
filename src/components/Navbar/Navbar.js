@@ -29,10 +29,9 @@ const Navbar = () => {
       </div>
 
       <div className="header__right">
-        <a href="#">Home</a>
-        <a href="#">All Beds</a>
-        <a href="#">Covid Beds</a>
-        <a href="#">Ventilators</a>
+        <a href="/">Home</a>
+        <a href="#">Hospital Login</a>
+
       </div>
     </div>
   );
