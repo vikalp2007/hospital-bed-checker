@@ -6,7 +6,10 @@ import WebFont from "webfontloader";
 import Footer from "./components/Footer/Footer";
 import Home from "./Pages/Home/Home";
 import Newsletter from "./components/Newsletter/Newsletter";
-import HospitalInformation from "./Pages/HospitalInformation/HospitalInformation";
+import SearchHospital from "./Pages/SearchHospital/SearchHospital";
+import HospitalDetails from "./Pages/HospitalDetails/HospitalDetails";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   useEffect(() => {
@@ -21,12 +24,12 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <div className="container">
+      <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/hospital/:id" element={<HospitalInformation />} />
+          <Route path="/hospitals" element={<SearchHospital />} />
+          <Route path="/hospital/:id" element={<HospitalDetails />} />
         </Routes>
-      </div>
       <Newsletter/>
       <Footer />
     </Router>

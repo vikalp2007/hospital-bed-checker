@@ -1,0 +1,23 @@
+.searchHospital{
+    margin-top: 80px;
+    text-align: center;
+    display: flex;
+}
+
+.searchFilters{
+    flex: .2;
+    padding: 20px;
+    border-right: 1px solid lightgray;
+    background-color: aliceblue;
+}
+
+.HospitalCards{
+    flex: 0.8;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    align-items: center;
+    justify-content: center;
+}   
+
