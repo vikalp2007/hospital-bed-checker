@@ -14,6 +14,7 @@ const FilteredHospitals = ({ option1, option2, option3, option4, option5 }) => {
 
   const getData = () => {
     let q = collection(database, "Hospitals");
+
     if (option1 !== "All" && option1) {
       q = query(q, where("Locality", "==", option1));
     }

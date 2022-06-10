@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "Hospitals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Locality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "`Available Beds`.`Normal Beds`",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
